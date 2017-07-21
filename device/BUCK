@@ -1,0 +1,7 @@
+cxx_binary(
+  name = 'main',
+  srcs = ['main.cpp'],
+  deps = [
+    '//vendor/opencv:opencv'
+  ]
+)

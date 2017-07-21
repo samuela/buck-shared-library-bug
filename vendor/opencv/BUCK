@@ -1,0 +1,169 @@
+remote_file(
+  name = 'opencv-src',
+  url = 'https://github.com/opencv/opencv/archive/3.2.0.zip',
+  sha1 = '7a7d2eb8cf617f58d610d856e531f3d92b89bc42',
+  type = 'exploded_zip'
+)
+
+genrule(
+  name = 'opencv-build',
+  cmd = 'cp -r $(location :opencv-src)/opencv-3.2.0 $SRCDIR && \
+         cd $SRCDIR/opencv-3.2.0 && \
+         mkdir build && \
+         cd build && \
+         cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=$OUT .. && \
+         make -j 2 && \
+         make install',
+  out = '.'
+)
+
+prebuilt_cxx_library(
+  name = 'calib3d',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_calib3d',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'core',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_core',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'features2d',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_features2d',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'flann',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_flann',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'highgui',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_highgui',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'imgcodecs',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_imgcodecs',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'imgproc',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_imgproc',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'ml',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_ml',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'objdetect',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_objdetect',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'photo',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_photo',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'shape',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_shape',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'stitching',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_stitching',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'superres',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_superres',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'video',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_video',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'videoio',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_videoio',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+prebuilt_cxx_library(
+  name = 'videostab',
+  visibility = ['PUBLIC'],
+  lib_name = 'opencv_videostab',
+  lib_dir = '$(location :opencv-build)/lib',
+  include_dirs = ['$(location :opencv-build)/include']
+)
+
+cxx_library(
+  name = 'opencv',
+  visibility = ['PUBLIC'],
+  exported_deps = [
+    ':calib3d',
+    ':core',
+    ':features2d',
+    ':flann',
+    ':highgui',
+    ':imgcodecs',
+    ':imgproc',
+    ':ml',
+    ':objdetect',
+    ':photo',
+    ':shape',
+    ':stitching',
+    ':superres',
+    ':video',
+    ':videoio',
+    ':videostab'
+  ]
+)
